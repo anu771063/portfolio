@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0A0A0D">
+<meta name="theme-color" content="#0B1220">
 <title>Anu - Frontend & Web Developer</title>
 <meta name="description" content="Anu is a frontend and web developer building fast, pixel-perfect websites with React and WordPress.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,17 +11,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0A0A0D;
-    --surface: #151517;
-    --surface-2: #1D1D21;
-    --ink: #F4F6FB;
-    --ink-soft: #A9AFC7;
-    --ink-faint: #6D7396;
-    --coral: #FF6B5B;
-    --yellow: #FFC145;
-    --teal: #2EC4B6;
-    --violet: #8B75FF;
-    --line: rgba(255,255,255,0.09);
+    --bg: #0B1220;
+    --surface: #121C2D;
+    --surface-2: #1A2840;
+    --ink: #F4F7FC;
+    --ink-soft: #B3BED1;
+    --ink-faint: #7E8CA5;
+    --coral: #C3F36B;
+    --yellow: #7BDFF2;
+    --teal: #46D9C7;
+    --violet: #A78BFA;
+    --line: rgba(199,216,242,0.12);
     --radius: 14px;
     --maxw: 1080px;
   }
@@ -140,9 +140,11 @@
   }
   .nav-links a:hover::after { width: 100%; }
   .nav-links a:hover { color: var(--ink); }
+  .nav-links a[aria-current="location"] { color: var(--ink); }
+  .nav-links a[aria-current="location"]::after { width: 100%; }
 
-  .nav-cta {
-    background: linear-gradient(135deg, var(--coral), var(--violet));
+.nav-cta {
+    background: linear-gradient(120deg, #3469C7, #7057C8);
     color: #fff !important;
     padding: 9px 18px;
     border-radius: 100px;
@@ -150,7 +152,10 @@
     font-weight: 700;
     font-size: 0.9rem;
     white-space: nowrap;
-  }
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
   .nav-cta:hover { filter: brightness(1.08); }
 
   .menu-btn {
@@ -173,30 +178,48 @@
     padding: 90px 0 60px;
     position: relative;
     overflow: hidden;
+    isolation:isolate;
+    background:
+      radial-gradient(ellipse at 80% 8%, rgba(167,139,250,.2), transparent 34%),
+      radial-gradient(ellipse at 8% 82%, rgba(70,217,199,.13), transparent 35%),
+      radial-gradient(ellipse at 55% 95%, rgba(195,243,107,.09), transparent 36%),
+      linear-gradient(125deg, #0B1220 10%, #101827 55%, #11142A 100%);
+  }
+  .hero::before {
+    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:radial-gradient(rgba(203,220,255,.22) .8px, transparent .8px);
+    background-size:24px 24px; opacity:.16;
+    mask-image:linear-gradient(90deg, transparent 5%, #000 55%, transparent 100%);
+  }
+  .hero::after {
+    content:""; position:absolute; width:540px; height:540px; right:-310px; top:12%; z-index:0;
+    border:1px solid rgba(70,217,199,.22); border-radius:42% 58% 58% 42% / 48% 40% 60% 52%;
+    box-shadow:0 0 0 34px rgba(70,217,199,.035), 0 0 0 76px rgba(167,139,250,.035), inset 0 0 80px rgba(195,243,107,.08);
+    transform:rotate(-24deg); pointer-events:none;
   }
   .blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(70px);
-    opacity: 0.35;
+    filter: blur(82px);
+    opacity: 0.42;
     pointer-events: none;
     z-index: 0;
   }
   .blob-1 {
     width: 420px; height: 420px;
-    background: var(--violet);
+    background: radial-gradient(circle at 35% 40%, #B9A7FF, rgba(106,169,255,.62) 42%, rgba(70,217,199,.28) 66%, transparent 78%);
     top: -140px; right: -60px;
     animation: float1 16s ease-in-out infinite;
   }
   .blob-2 {
     width: 320px; height: 320px;
-    background: var(--coral);
+    background: radial-gradient(circle at 45% 45%, #C3F36B, rgba(70,217,199,.58) 42%, transparent 76%);
     bottom: -100px; left: -80px;
     animation: float2 20s ease-in-out infinite;
   }
   .blob-3 {
     width: 260px; height: 260px;
-    background: var(--teal);
+    background: radial-gradient(circle at 40% 35%, #7BDFF2, rgba(70,217,199,.54) 42%, rgba(167,139,250,.28) 68%, transparent 78%);
     top: 40%; left: 55%;
     animation: float3 18s ease-in-out infinite;
   }
@@ -216,13 +239,22 @@
     position: absolute;
     width: 380px; height: 380px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(139,117,255,0.28), transparent 70%);
+    background: radial-gradient(circle at 35% 35%, rgba(70,217,199,.2), rgba(167,139,250,.16) 42%, transparent 70%);
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 0;
     opacity: 0;
     transition: opacity 0.3s ease;
   }
+  .cursor-orbit { display:none; position:fixed; top:0; left:0; z-index:300; width:32px; height:32px; border:1px solid rgba(203,244,255,.78); border-radius:50%; pointer-events:none; opacity:0; transform:translate3d(-50%,-50%,0); mix-blend-mode:screen; background:radial-gradient(circle at 35% 35%,rgba(70,217,199,.18),rgba(167,139,250,.14) 52%,transparent 74%); box-shadow:0 0 16px rgba(70,217,199,.26); transition:opacity .2s ease,width .2s ease,height .2s ease,border-color .2s ease; }
+  .cursor-orbit::before { content:""; position:absolute; width:4px; height:4px; left:50%; top:50%; border-radius:50%; transform:translate(-50%,-50%); background:#fff; box-shadow:0 0 9px 3px rgba(195,243,107,.64); }
+  .cursor-orbit.is-visible { opacity:.9; }
+  .cursor-orbit.is-hover { width:46px; height:46px; border-color:rgba(195,243,107,.9); box-shadow:0 0 22px rgba(70,217,199,.3),inset 0 0 12px rgba(167,139,250,.2); }
+  @media (pointer:fine) and (prefers-reduced-motion:no-preference) { .cursor-orbit { display:block; } }
+  .code-stamp { position:absolute; z-index:0; display:grid; gap:3px; padding:10px 13px; border:1px solid rgba(186,207,245,.16); border-radius:10px; color:rgba(216,229,255,.52); background:linear-gradient(135deg,rgba(24,38,64,.68),rgba(21,27,48,.38)); box-shadow:0 12px 38px rgba(0,0,0,.16), inset 0 1px rgba(255,255,255,.05); backdrop-filter:blur(10px); font:500 .65rem 'JetBrains Mono',monospace; letter-spacing:.07em; pointer-events:none; }
+  .code-stamp b { color:var(--teal); font:600 1rem 'JetBrains Mono',monospace; letter-spacing:0; }
+  .code-stamp-a { right:2.5%; top:12%; transform:rotate(7deg); }
+  .code-stamp-b { left:46%; bottom:9%; transform:rotate(-6deg); }
 
   .hero-grid {
     position: relative;
@@ -246,7 +278,7 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     position: relative;
-    box-shadow: 0 0 0 3px var(--surface), 0 0 24px rgba(139,117,255,0.4);
+    box-shadow: 0 0 0 3px var(--surface), 0 0 24px rgba(169,139,250,0.35);
   }
   .avatar img {
     width: 100%; height: 100%; object-fit: cover;
@@ -299,7 +331,7 @@
     cursor: pointer;
   }
   .btn-primary {
-    background: linear-gradient(135deg, var(--coral), var(--violet));
+    background: linear-gradient(115deg, #137F87 0%, #3977C9 48%, #7157C6 100%);
     color: #fff;
   }
   .btn-primary:hover { filter: brightness(1.08); }
@@ -333,15 +365,14 @@
   .browser {
     position: relative;
     z-index: 1;
-    background: var(--surface);
+    background:linear-gradient(145deg,rgba(26,40,64,.96),rgba(18,28,45,.98) 52%,rgba(22,25,48,.98));
     border-radius: 16px;
     box-shadow: 0 30px 60px -24px rgba(0,0,0,0.55), 0 0 0 1px var(--line);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   }
   .hero:hover .browser {
-    box-shadow: 0 40px 80px -20px rgba(139, 117, 255, 0.2), 0 0 0 1px var(--line);
-    transform: translateY(-4px);
+    box-shadow: 0 40px 80px -20px rgba(169, 139, 250, 0.18), 0 0 0 1px var(--line);
   }
   .browser-bar {
     display: flex;
@@ -381,6 +412,8 @@
   @keyframes blink { 50% { opacity: 0; } }
 
   .browser-body {
+    position: relative;
+    height: 310px;
     padding: 26px 24px 30px;
   }
   .skel {
@@ -405,14 +438,14 @@
     border-radius: 100px;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #0A0A0D;
+    color: #0B1220;
   }
 
   /* ---------- MARQUEE ---------- */
   .marquee {
     overflow: hidden;
     padding: 20px 0;
-    background: var(--surface);
+    background:radial-gradient(ellipse at 15% 0%,rgba(85,214,190,.13),transparent 38%),radial-gradient(ellipse at 85% 100%,rgba(169,139,250,.14),transparent 42%),linear-gradient(105deg,#111B2B,#182138 50%,#111B2B);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     position: relative;
@@ -439,6 +472,14 @@
     font-weight: 600;
     color: var(--ink-soft);
   }
+  .marquee { background:radial-gradient(ellipse at 12% 0%,rgba(70,217,199,.13),transparent 34%),radial-gradient(ellipse at 50% 100%,rgba(106,169,255,.12),transparent 36%),radial-gradient(ellipse at 90% 8%,rgba(167,139,250,.18),transparent 38%),linear-gradient(105deg,#111421,#182138 50%,#111421); padding:20px 0 22px; }
+  .marquee-intro { max-width:var(--maxw); padding:0 28px; margin:0 auto 12px; display:flex; align-items:center; justify-content:space-between; gap:16px; color:var(--ink-faint); font:500 .72rem 'JetBrains Mono',monospace; letter-spacing:.08em; text-transform:uppercase; }
+  .marquee-intro strong { color:var(--ink-soft); font-weight:500; }
+  .marquee .m-pill { padding:9px 16px; border-radius:9px; border-color:rgba(255,255,255,.13); background:rgba(255,255,255,.045); font-size:.83rem; }
+  .marquee .m-pill:nth-child(4n + 1) { color:var(--teal); }
+  .marquee .m-pill:nth-child(4n + 2) { color:#c1b6ff; }
+  .marquee .m-pill:nth-child(4n + 3) { color:var(--coral); }
+  .marquee .m-pill:nth-child(4n + 4) { color:var(--yellow); }
 
   /* ---------- SECTION HEADING ---------- */
   section { padding: 74px 0; position: relative; }
@@ -458,12 +499,12 @@
   /* ---------- REVEAL ANIMATION ---------- */
   .reveal {
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    transition: opacity 0.8s cubic-bezier(.16,.84,.44,1), transform 0.8s cubic-bezier(.16,.84,.44,1);
+    transform: translateY(16px);
+    transition: opacity 0.65s cubic-bezier(.16,.84,.44,1), transform 0.65s cubic-bezier(.16,.84,.44,1);
   }
   .reveal.in-view { 
     opacity: 1; 
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
   .about-facts .fact:nth-child(1) { transition-delay: 0s; }
   .about-facts .fact:nth-child(2) { transition-delay: 0.1s; }
@@ -479,12 +520,10 @@
   .skill-clusters .cluster:nth-child(2) { transition-delay: 0.06s; }
   .skill-clusters .cluster:nth-child(3) { transition-delay: 0.12s; }
   .skill-clusters .cluster:nth-child(4) { transition-delay: 0.18s; }
-  .skill-clusters .cluster:nth-child(5) { transition-delay: 0.24s; }
-  .skill-clusters .cluster:nth-child(6) { transition-delay: 0.3s; }
 
   /* ---------- ABOUT BAND ---------- */
   .about {
-    background: var(--surface);
+    background: linear-gradient(135deg, rgba(85,214,190,.08), transparent 60%), var(--surface);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
@@ -530,9 +569,8 @@
     transform: scaleY(1);
   }
   .fact:hover {
-    background: rgba(255, 107, 91, 0.05);
+    background: rgba(106, 169, 255, 0.07);
     border-color: var(--coral);
-    transform: translateX(4px);
   }
   .fact-dot {
     width: 8px; height: 8px;
@@ -558,8 +596,14 @@
     grid-template-columns: 1fr 1fr;
     gap: 26px;
   }
+  .project-filters { display: flex; flex-wrap: wrap; gap: 9px; margin: -18px 0 28px; }
+  .filter-btn { border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; background: var(--surface); color: var(--ink-soft); font: 600 .86rem 'Inter', sans-serif; cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
+  .filter-btn:hover { color: var(--ink); border-color: var(--violet); transform: translateY(-1px); }
+  .filter-btn[aria-pressed="true"] { color: #fff; background: linear-gradient(120deg, #3469C7, #7057C8); border-color: transparent; }
+  .project-card.filter-enter { animation: filterEnter .32s ease both; }
+  @keyframes filterEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .project-card {
-    background: var(--surface);
+    background:linear-gradient(145deg,#17243A,#121C2D 52%,#14192B);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     overflow: hidden;
@@ -584,8 +628,7 @@
     transform: scaleX(1);
   }
   .project-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 30px 60px -20px rgba(255, 107, 91, 0.25), 0 0 1px 1px var(--line);
+    box-shadow: 0 18px 42px -22px rgba(106, 169, 255, 0.24), 0 0 1px 1px var(--line);
     border-color: var(--coral);
   }
   .proj-top {
@@ -620,6 +663,89 @@
   .proj-image-link img {
     transition: transform 0.45s cubic-bezier(0.23, 1, 0.320, 1), filter 0.45s ease;
   }
+  .plugin-art {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background: radial-gradient(circle at 30% 20%, rgba(169,139,250,0.24), transparent 48%), linear-gradient(135deg, #18243A, #0D1626 70%);
+  }
+  .plugin-art::before, .plugin-art::after {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 36px;
+    transform: rotate(35deg);
+  }
+  .plugin-art::after { width: 135px; height: 135px; border-color: rgba(106,169,255,0.24); transform: rotate(55deg); }
+  .plugin-art span {
+    position: relative;
+    z-index: 1;
+    font: 800 clamp(1.8rem, 4vw, 2.7rem)/1 'Bricolage Grotesque', sans-serif;
+    letter-spacing: -0.06em;
+    color: var(--ink);
+    text-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+  .plugin-art.handoverly { background: radial-gradient(circle at 68% 34%, rgba(85,214,190,0.25), transparent 45%), linear-gradient(135deg, #142A35, #0D1626 70%); }
+  .plugin-art.lynkora { background: radial-gradient(circle at 32% 30%, rgba(123,223,242,0.18), transparent 45%), linear-gradient(135deg, #1D2940, #0D1626 70%); }
+
+  .case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .case-card { background:linear-gradient(145deg,rgba(106,169,255,.07),rgba(18,28,45,.98) 46%,rgba(169,139,250,.035)); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  .case-thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: -26px -26px 20px; }
+  .case-thumbs a { position: relative; height: 125px; overflow: hidden; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .case-thumbs img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .35s ease; }
+  .case-thumbs a:hover img { transform: scale(1.04); }
+  .case-thumbs span { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 9px 7px; color: white; font-size: .72rem; font-weight: 700; background: linear-gradient(transparent, rgba(0,0,0,.8)); }
+  .case-feature { display: grid; grid-template-columns: .95fr 1.05fr; gap: 30px; padding: 24px; margin-bottom: 24px; background:linear-gradient(115deg,rgba(106,169,255,.1),rgba(18,28,45,.98) 45%,rgba(169,139,250,.08)); border: 1px solid var(--line); border-radius: var(--radius); }
+  .case-gallery { min-height: 318px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 155px 155px; gap: 8px; border-radius: 10px; overflow: hidden; }
+  .case-shot { position: relative; display: block; min-width: 0; overflow: hidden; background: var(--bg); }
+  .case-shot:first-child { grid-row: span 2; }
+  .case-shot img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top center; transition: transform .35s ease, filter .35s ease; }
+  .case-shot:hover img { transform: scale(1.035); filter: brightness(1.08); }
+  .case-shot span { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 10px 9px; color: white; font-size: .75rem; font-weight: 700; background: linear-gradient(transparent, rgba(0,0,0,.82)); }
+  .case-feature-copy { align-self: center; }
+  .case-feature-copy h3 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 9px 0 12px; }
+  .case-feature-copy > p { color: var(--ink-soft); margin: 0; }
+  .case-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px 30px; grid-column: 1 / -1; }
+  .case-detail-grid .case-part { margin: 0; }
+  .case-detail-grid ul { margin: 6px 0 0; padding-left: 18px; color: var(--ink-soft); font-size: .92rem; }
+  .case-detail-grid li { padding: 3px 0; }
+  .case-kicker { color: var(--teal); font: 500 .78rem 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .06em; }
+  .case-card h3 { font-size: 1.5rem; margin: 8px 0 20px; }
+  .case-part { margin: 15px 0; }
+  .case-part h4, .built-heading { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-faint); margin: 0 0 5px; }
+  .case-part p { color: var(--ink-soft); margin: 0; font-size: .94rem; }
+  .plugin-preview { min-height: 208px; margin: 18px 0 20px; padding: 18px; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(85,214,190,.12), rgba(169,139,250,.1)); border: 1px solid var(--line); }
+  .preview-paper { width: 66%; min-height: 164px; padding: 15px; border-radius: 5px; background: #f7f6f2; color: #22252b; box-shadow: 0 10px 28px rgba(0,0,0,.28); display: flex; flex-direction: column; gap: 7px; }
+  .preview-label { font: 700 .53rem 'JetBrains Mono', monospace; color: #6357ad; letter-spacing: .09em; }
+  .preview-paper > b { font: 700 1rem 'Bricolage Grotesque', sans-serif; }
+  .preview-paper i { display: block; height: 4px; width: 90%; border-radius: 5px; background: #d9dbe0; }
+  .preview-paper i.short { width: 58%; }
+  .preview-step { display: flex; gap: 8px; align-items: center; border-top: 1px solid #dedee4; padding-top: 7px; margin-top: 2px; }
+  .preview-step > span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #6b5fc2; color: white; font-size: .65rem; }
+  .preview-step div { flex: 1; }
+  .preview-step b { display: block; font-size: .66rem; }
+  .preview-step i { margin-top: 4px; width: 76%; }
+  .preview-caption { position: absolute; bottom: 8px; right: 12px; font-size: .68rem; color: var(--ink-soft); }
+  .preview-dashboard { width: 100%; border-radius: 8px; padding: 13px; background: #17181d; box-shadow: 0 10px 28px rgba(0,0,0,.3); }
+  .preview-dash-head { display: flex; justify-content: space-between; align-items: center; font-size: .76rem; margin-bottom: 11px; }
+  .preview-dash-head span { color: var(--teal); font-size: .65rem; }
+  .preview-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-bottom: 9px; }
+  .preview-metrics div { border: 1px solid var(--line); border-radius: 6px; padding: 7px; }
+  .preview-metrics b { display: block; color: var(--coral); font-size: .9rem; }
+  .preview-metrics small { color: var(--ink-soft); font-size: .57rem; }
+  .preview-row { display: flex; align-items: center; gap: 7px; padding: 7px 3px; border-top: 1px solid var(--line); font-size: .61rem; }
+  .preview-row > b { flex: 1; font-weight: 500; }
+  .preview-row small { color: var(--teal); font-size: .56rem; }
+  .preview-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
+  .preview-dot.warning { background: var(--yellow); }
+  .built-list { margin: 0 0 18px; padding-left: 18px; color: var(--ink-soft); font-size: .88rem; }
+  .built-list li { padding: 3px 0; }
   .project-card:hover .proj-image-link img {
     transform: scale(1.035);
     filter: brightness(1.06);
@@ -663,11 +789,11 @@
   /* ---------- SKILLS ---------- */
   .skill-clusters {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
   .cluster {
-    background: var(--surface);
+    background:linear-gradient(145deg,rgba(106,169,255,.075),rgba(18,28,45,.97) 48%,rgba(169,139,250,.045));
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 22px;
@@ -676,8 +802,7 @@
     position: relative;
   }
   .cluster:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.3);
     border-color: var(--coral);
   }
   .cluster:nth-child(2) { border-top-color: var(--violet); }
@@ -734,9 +859,9 @@
     border-radius: 50%;
     background: var(--coral);
     border: 3px solid var(--bg);
-    box-shadow: 0 0 0 2px var(--coral), 0 0 14px rgba(255,107,91,0.5);
+    box-shadow: 0 0 0 2px var(--coral), 0 0 14px rgba(106,169,255,0.38);
   }
-  .tl-item:nth-child(2) .tl-dot { background: var(--violet); box-shadow: 0 0 0 2px var(--violet), 0 0 14px rgba(139,117,255,0.5); }
+  .tl-item:nth-child(2) .tl-dot { background: var(--violet); box-shadow: 0 0 0 2px var(--violet), 0 0 14px rgba(169,139,250,0.4); }
   .tl-role {
     font-size: 1.12rem;
     font-weight: 700;
@@ -796,7 +921,7 @@
   .edu-card:hover {
     transform: translateY(-6px);
     border-color: var(--violet);
-    box-shadow: 0 20px 40px -15px rgba(139, 117, 255, 0.2);
+    box-shadow: 0 20px 40px -15px rgba(169, 139, 250, 0.18);
   }
   .edu-card h4 {
     font-family: 'Bricolage Grotesque', sans-serif;
@@ -809,7 +934,7 @@
   .contact {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--violet), var(--coral));
+    background:radial-gradient(circle at 84% 12%,rgba(255,255,255,.2),transparent 25%),radial-gradient(ellipse at 8% 110%,rgba(70,217,199,.3),transparent 42%),radial-gradient(ellipse at 92% 105%,rgba(195,243,107,.18),transparent 34%),linear-gradient(115deg,#176F7D 0%,#425DB9 45%,#6952B8 78%,#1D756E 120%);
     color: #fff;
     border-radius: 24px;
     padding: 60px 48px;
@@ -818,10 +943,6 @@
     max-width: calc(var(--maxw) - 56px);
     margin-left: auto;
     margin-right: auto;
-    transition: transform 0.3s ease;
-  }
-  .contact:hover {
-    transform: scale(1.01);
   }
   .contact h2 {
     color: #fff;
@@ -847,14 +968,16 @@
     border-radius: 100px;
     font-weight: 700;
     font-size: 0.92rem;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
     transition: transform 0.15s ease;
   }
   .contact-links .primary {
-    background: #0A0A0D;
+    background: #0B1220;
     color: #fff;
   }
-  .contact-links .primary:hover { background: #151517; }
+  .contact-links .primary:hover { background: #18243A; }
   .contact-links .secondary {
     border: 1px solid rgba(255,255,255,0.4);
     color: #fff;
@@ -868,6 +991,31 @@
     font-size: 0.85rem;
   }
 
+  .icon { width:18px; height:18px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; }
+  .fact-icon { width:23px; height:23px; flex:0 0 auto; margin-top:2px; fill:none; stroke:var(--teal); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .cluster-heading { display:flex; align-items:center; gap:11px; margin-bottom:14px; }
+  .cluster-heading h3 { margin:0; }
+  .cluster-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:11px; color:var(--coral); background:rgba(106,169,255,.12); }
+  .cluster-icon .icon { width:21px; height:21px; }
+  .cluster-example { color:var(--ink-soft); font-size:.87rem; margin:13px 0 0; padding-top:12px; border-top:1px solid var(--line); }
+  .cluster-example strong { color:var(--ink); }
+  section { isolation:isolate; }
+  section > .wrap { position:relative; z-index:1; }
+  #projects { background:radial-gradient(ellipse at 4% 4%,rgba(167,139,250,.14),transparent 30%),radial-gradient(ellipse at 96% 46%,rgba(106,169,255,.13),transparent 34%),radial-gradient(ellipse at 82% 100%,rgba(70,217,199,.08),transparent 36%),linear-gradient(145deg,#0B1220,#0D1525 55%,#10142A); }
+  #projects::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.13; background-image:linear-gradient(rgba(164,191,235,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(164,191,235,.18) 1px,transparent 1px); background-size:52px 52px; mask-image:linear-gradient(120deg,transparent 4%,#000 50%,transparent 96%); }
+  #case-studies { background:radial-gradient(ellipse at 90% 4%,rgba(167,139,250,.20),transparent 38%),radial-gradient(ellipse at 8% 90%,rgba(70,217,199,.11),transparent 38%),radial-gradient(ellipse at 54% 105%,rgba(123,223,242,.10),transparent 38%),linear-gradient(135deg,#121C2D,#171B34 55%,#122132); border-block:1px solid var(--line); }
+  #case-studies::before { content:""; position:absolute; width:410px; height:410px; left:-250px; top:16%; border:1px solid rgba(169,139,250,.18); border-radius:50%; box-shadow:0 0 0 28px rgba(169,139,250,.035),0 0 0 62px rgba(106,169,255,.025); pointer-events:none; }
+  #plugins { background:radial-gradient(ellipse at 4% 10%,rgba(70,217,199,.14),transparent 34%),radial-gradient(ellipse at 100% 80%,rgba(167,139,250,.15),transparent 35%),radial-gradient(ellipse at 75% 8%,rgba(123,223,242,.11),transparent 32%),linear-gradient(120deg,#0B1220,#0D1B2A 56%,#10172A); }
+  #plugins::before { content:"{ }"; position:absolute; right:3%; top:7%; color:rgba(85,214,190,.07); font:700 clamp(7rem,18vw,15rem)/1 'JetBrains Mono',monospace; pointer-events:none; }
+  #skills { background:radial-gradient(ellipse at 0% 0%,rgba(106,169,255,.14),transparent 40%),radial-gradient(ellipse at 100% 100%,rgba(167,139,250,.16),transparent 42%),radial-gradient(ellipse at 48% 0%,rgba(195,243,107,.08),transparent 30%),linear-gradient(135deg,#121C2D,#171B32 60%,#142337) !important; }
+  #skills::before { content:""; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.11; background-image:radial-gradient(rgba(199,216,242,.35) .7px,transparent .7px); background-size:20px 20px; mask-image:linear-gradient(90deg,#000,transparent 78%); }
+  #experience { background:radial-gradient(ellipse at 100% 15%,rgba(70,217,199,.11),transparent 34%),radial-gradient(ellipse at 0% 85%,rgba(167,139,250,.13),transparent 36%),radial-gradient(ellipse at 48% 100%,rgba(195,243,107,.07),transparent 34%),linear-gradient(135deg,#0B1220,#101829); }
+  #skeletonLoader { position:absolute; top:58px; left:24px; right:24px; opacity:1; transition:opacity .35s ease; }
+  #skeletonLoader.is-hidden { opacity:0; pointer-events:none; }
+  #sitePreview { position:absolute; top:58px; left:24px; width:calc(100% - 48px); height:230px; object-fit:cover; border-radius:8px; opacity:0; visibility:hidden; transform:scale(1.035); transition:opacity .55s ease, transform .7s cubic-bezier(.2,.7,.2,1), visibility .55s; }
+  #sitePreview.is-active { opacity:1; visibility:visible; transform:scale(1); }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation:none !important; white-space:normal; flex-wrap:wrap; justify-content:center; width:100%; } #sitePreview { transform:none; } }
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 860px) {
     .nav-links, .nav-cta { display: none; }
@@ -875,9 +1023,11 @@
     .hero-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
     .project-grid { grid-template-columns: 1fr; }
+    .case-grid, .case-detail-grid, .case-feature { grid-template-columns: 1fr; }
     .skill-clusters { grid-template-columns: 1fr; }
     .contact { padding: 40px 26px; margin: 0 16px 60px; }
     .hero { padding: 50px 0 40px; }
+    .code-stamp { display:none; }
     section { padding: 54px 0; }
     .cursor-glow { display: none; }
   }
@@ -900,18 +1050,35 @@
 </head>
 <body>
 
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></symbol>
+  <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="icon-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.1 0l3-3A5 5 0 0 0 13 2.9l-1.7 1.7m2.7 6.4a5 5 0 0 0-7.1 0l-3 3A5 5 0 0 0 11 21.1l1.7-1.7"/></symbol>
+  <symbol id="icon-code" viewBox="0 0 24 24"><path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-11-2 14"/></symbol>
+  <symbol id="icon-layout" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></symbol>
+  <symbol id="icon-speed" viewBox="0 0 24 24"><path d="M4 18a9 9 0 1 1 16 0M12 13l4-4m-4 4-2 5m-5 1h14"/></symbol>
+  <symbol id="icon-api" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M8 7.5 11 16m5-8.5L13 16M8 6h8"/></symbol>
+  <symbol id="icon-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8m-4-4v4"/></symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="icon-team" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1m2-15a3 3 0 0 1 0 6m1 3a5 5 0 0 1 3 5v1"/></symbol>
+</svg>
+
 <div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-orbit" id="cursorOrbit" aria-hidden="true"></div>
 
 <nav>
   <div class="nav-inner">
     <a href="#home" class="logo"><span class="logo-dot"></span>Anu</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#case-studies">Case studies</a></li>
+      <li><a href="#plugins">Plugins</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="https://drive.google.com/file/d/1rcGJfdtvEK2FAgbNdmeh9ixYj6SZAcQ6/view?usp=sharing" class="nav-cta" id="navCta" target="_blank" rel="noopener">Resume</a>
+    <a href="Anu-Web-Developer.pdf" class="nav-cta" id="navCta" target="_blank" rel="noopener" download><svg class="icon"><use href="#icon-download"></use></svg>Download résumé</a>
     <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -922,6 +1089,8 @@
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
   <div class="blob blob-3"></div>
+  <div class="code-stamp code-stamp-a" aria-hidden="true"><span>COMPONENT / 01</span><b>&lt;UI /&gt;</b></div>
+  <div class="code-stamp code-stamp-b" aria-hidden="true"><span>BUILD.STATUS</span><b>0 → shipped</b></div>
   <div class="cursor-glow" id="cursorGlow"></div>
 
   <div class="wrap hero-grid">
@@ -937,13 +1106,13 @@
 
       <h1>Building fast, thoughtful websites that work beautifully<span class="accent">.</span></h1>
       <p class="lede">
-        Five years turning Figma files and rough ideas into fast, accessible
-        sites with React and WordPress. 80+ shipped, and counting.
+        Five years turning design files, prototypes, and product ideas into fast,
+        accessible sites with React and WordPress. 80+ shipped, and counting.
       </p>
 
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">See the work</a>
-        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        <a href="#projects" class="btn btn-primary">See the work <svg class="icon"><use href="#icon-arrow"></use></svg></a>
+        <a href="#contact" class="btn btn-ghost"><svg class="icon"><use href="#icon-mail"></use></svg>Get in touch</a>
       </div>
 
       <div class="stat-row" id="statRow">
@@ -966,13 +1135,14 @@
           <div class="skel skel-line short"></div>
           <div class="skel skel-block"></div>
         </div>
-        <img id="sitePreview" src="" alt="Website preview" style="width: 100%; height: 230px; object-fit: cover; border-radius: 8px; margin-top: 12px; display: none;">
+        <img id="sitePreview" src="" alt="Rotating preview of Anu's website projects">
       </div>
     </div>
   </div>
 </header>
 
 <div class="marquee">
+  <div class="marquee-intro"><span>Core stack</span><strong>Tools I use to ship from design to production</strong></div>
   <div class="marquee-track" id="marqueeTrack"></div>
 </div>
 
@@ -983,30 +1153,29 @@
         <h2>A bit about how I work</h2>
       </div>
       <p>
-        I've spent five years at the intersection of design and code, helping
-        ship enterprise, ecommerce, and corporate sites end-to-end. My work
-        starts with any design file and ends in pixel-perfect, cross-browser
-        frontend code.
+        I'm Anu, a frontend and WordPress developer based in India. I translate
+        design files, wireframes, prototypes, and product requirements into
+        responsive, accessible interfaces using React, TypeScript, and WordPress.
       </p>
       <p>
-        Lately that also means working alongside AI coding assistants like
-        Cursor, Claude Code, and Codex, plus AI chat tools for quick
-        problem-solving, which has cut my development cycles by roughly 60%
-        without cutting corners on quality.
+        My work spans component architecture, Elementor builds, custom CSS and
+        JavaScript, API integrations, technical SEO, and Core Web Vitals. I also
+        build WordPress plugins, including Handoverly and Lynkora, with maintainability
+        and the post-launch editing experience in mind.
       </p>
     </div>
     <div class="about-facts">
       <div class="fact reveal">
-        <span class="fact-dot" style="background: var(--coral);"></span>
-        <div><h4>Mobile-first, always</h4><p>Every layout is designed and tested for phones first, then scaled up, so the experience holds up on any screen.</p></div>
+        <svg class="fact-icon"><use href="#icon-device"></use></svg>
+        <div><h4>Responsive interface engineering</h4><p>Build mobile-first layouts with semantic HTML, reusable components, and accessible interaction patterns across breakpoints.</p></div>
       </div>
       <div class="fact reveal">
-        <span class="fact-dot" style="background: var(--violet);"></span>
-        <div><h4>SEO built in, not bolted on</h4><p>Semantic HTML, meta strategy, and Core Web Vitals work using Semrush and Screaming Frog.</p></div>
+        <svg class="fact-icon"><use href="#icon-speed"></use></svg>
+        <div><h4>Performance and technical SEO</h4><p>Improve Core Web Vitals, page structure, metadata, and crawlability with Lighthouse, Semrush, Screaming Frog, and Search Console.</p></div>
       </div>
       <div class="fact reveal">
-        <span class="fact-dot" style="background: var(--teal);"></span>
-        <div><h4>Comfortable leading</h4><p>Mentored and coordinated cross-functional teams across dozens of client projects.</p></div>
+        <svg class="fact-icon"><use href="#icon-team"></use></svg>
+        <div><h4>Technical collaboration and delivery</h4><p>Coordinate with design, content, and client teams; mentor developers and carry work from implementation through launch.</p></div>
       </div>
     </div>
   </div>
@@ -1019,9 +1188,35 @@
       <p>A few of the 80+ sites and platforms I've built or rebuilt, spanning WordPress, React, ecommerce, and marketing funnels.</p>
     </div>
 
+    <div class="project-filters" role="group" aria-label="Filter projects by type">
+      <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All work</button>
+      <button class="filter-btn" type="button" data-filter="wordpress" aria-pressed="false">WordPress</button>
+      <button class="filter-btn" type="button" data-filter="react" aria-pressed="false">React</button>
+      <button class="filter-btn" type="button" data-filter="ecommerce" aria-pressed="false">Ecommerce</button>
+      <button class="filter-btn" type="button" data-filter="marketing" aria-pressed="false">Marketing</button>
+    </div>
+
     <div class="project-grid">
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="wordpress">
+        <div class="proj-top">
+          <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+          <span class="url-pill">inadev.com</span>
+        </div>
+        <a class="proj-image-link" href="https://www.inadev.com/" target="_blank" rel="noopener" aria-label="View the INADEV website">
+          <img class="proj-image" src="https://image.thum.io/get/width/1200/crop/700/https://www.inadev.com/" alt="Current INADEV website preview" loading="lazy" onerror="this.onerror=null;this.src='https://image.thum.io/get/width/1200/crop/700/https%3A%2F%2Fwww.inadev.com%2F';">
+        </a>
+        <div class="proj-body">
+          <h3>INADEV</h3>
+          <p>I built most of INADEV’s WordPress design in Elementor, adding custom CSS and JavaScript for distinctive interactive sections and a polished responsive experience.</p>
+          <div class="tag-row">
+            <span class="tag">WordPress</span><span class="tag">Elementor</span><span class="tag">Custom CSS</span><span class="tag">JavaScript</span>
+          </div>
+          <a class="proj-link" href="https://www.inadev.com/" target="_blank" rel="noopener">Visit site &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal" data-category="react">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
           <span class="url-pill">aifoundry.me</span>
@@ -1031,7 +1226,7 @@
         </a>
         <div class="proj-body">
           <h3>AI Foundry</h3>
-          <p>Responsive landing platform for an AI upskilling program, built with a React component architecture and tuned for Core Web Vitals.</p>
+      <p>I built a responsive landing platform for an AI upskilling program, using reusable React components and tuning the experience for Core Web Vitals.</p>
           <div class="tag-row">
             <span class="tag">React</span><span class="tag">Component architecture</span><span class="tag">Performance</span>
           </div>
@@ -1039,7 +1234,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="wordpress">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
           <span class="url-pill">naylor.com</span>
@@ -1049,7 +1244,7 @@
         </a>
         <div class="proj-body">
           <h3>Naylor</h3>
-          <p>A 100+ page WordPress build with Elementor and custom code, including a mega menu system and full SEO optimization.</p>
+          <p>I built a 100+ page WordPress site with Elementor and custom code, including a mega menu and SEO-focused page structure.</p>
           <div class="tag-row">
             <span class="tag">WordPress</span><span class="tag">Elementor</span><span class="tag">SEO</span>
           </div>
@@ -1057,7 +1252,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="wordpress">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
           <span class="url-pill">colourcrewpainters.com</span>
@@ -1070,7 +1265,7 @@
         </a>
         <div class="proj-body">
           <h3>Colour Crew Painters</h3>
-          <p>Professional painting company website with a service-focused layout designed to present residential and commercial painting services clearly.</p>
+          <p>I built a service-focused website that presents residential and commercial painting services clearly.</p>
           <div class="tag-row">
             <span class="tag">WordPress</span><span class="tag">Responsive</span><span class="tag">Business site</span>
           </div>
@@ -1078,7 +1273,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="marketing">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
           <span class="url-pill">boardtwins.com</span>
@@ -1088,7 +1283,7 @@
         </a>
         <div class="proj-body">
           <h3>The Board Twins</h3>
-          <p>Fitness platform built on Go High Level, with custom funnel landing pages, forms, and email template design.</p>
+          <p>I built custom funnel landing pages, forms, and email templates for this fitness platform on Go High Level.</p>
           <div class="tag-row">
             <span class="tag">Go High Level</span><span class="tag">Funnels</span><span class="tag">Email design</span>
           </div>
@@ -1096,7 +1291,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="wordpress">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
           <span class="url-pill">maxicom.us</span>
@@ -1106,7 +1301,7 @@
         </a>
         <div class="proj-body">
           <h3>Maxicom</h3>
-          <p>A 40+ page service-based WordPress site redesign, focused on performance optimization across every page.</p>
+          <p>I redesigned a 40+ page service-based WordPress site, focusing on performance across its pages.</p>
           <div class="tag-row">
             <span class="tag">WordPress</span><span class="tag">Redesign</span><span class="tag">Performance</span>
           </div>
@@ -1114,7 +1309,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="wordpress">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
           <span class="url-pill">aonesecurity.ca</span>
@@ -1128,7 +1323,7 @@
         </a>
         <div class="proj-body">
           <h3>A One Security</h3>
-          <p>Security services website with a clear, professional presentation of solutions, services, and customer-focused calls to action.</p>
+          <p>I built a professional security services website that presents solutions and customer-focused calls to action clearly.</p>
           <div class="tag-row">
             <span class="tag">WordPress</span><span class="tag">Responsive</span><span class="tag">Service website</span>
           </div>
@@ -1136,7 +1331,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal">
+      <div class="project-card reveal" data-category="ecommerce">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
           <span class="url-pill">terracotta</span>
@@ -1146,7 +1341,7 @@
         </a>
         <div class="proj-body">
           <h3>Terracotta</h3>
-          <p>A warm, editorial ecommerce experience that brings product storytelling and shopping together in a focused, visually distinctive layout.</p>
+          <p>I built a warm, editorial ecommerce experience that brings product storytelling and shopping together in a focused layout.</p>
           <div class="tag-row">
             <span class="tag">Ecommerce</span><span class="tag">Product discovery</span><span class="tag">Responsive design</span>
           </div>
@@ -1158,6 +1353,120 @@
   </div>
 </section>
 
+<section id="case-studies">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Selected case studies</h2>
+      <p>A closer look at the goals, implementation, and delivered outcomes behind a few projects.</p>
+    </div>
+    <article class="case-feature reveal">
+      <div class="case-gallery" aria-label="Naylor website screenshots. Select an image to open it full size.">
+        <a class="case-shot" href="naylor-homepage.png" target="_blank" rel="noopener"><img src="naylor-homepage.png" alt="Naylor homepage redesign" loading="lazy"><span>Homepage</span></a>
+        <a class="case-shot" href="naylor-inner-page.png" target="_blank" rel="noopener"><img src="naylor-inner-page.png" alt="Naylor member communications inner page" loading="lazy"><span>Inner page</span></a>
+        <a class="case-shot" href="naylor-mega-menu.png" target="_blank" rel="noopener"><img src="naylor-mega-menu.png" alt="Naylor custom mega menu open" loading="lazy"><span>Mega menu</span></a>
+      </div>
+      <div class="case-feature-copy">
+        <span class="case-kicker">Featured case study · WordPress · Elementor</span>
+        <h3>Naylor: redesigning a 100+ page site while preserving its search foundations</h3>
+        <p>Naylor needed a modern redesign that kept its established URL structure and SEO metadata intact, migrated the blog, and made a large site easier to navigate and maintain.</p>
+        <a class="proj-link" href="https://naylor.com" target="_blank" rel="noopener">Visit Naylor &rarr;</a>
+      </div>
+      <div class="case-detail-grid">
+        <div class="case-part"><h4>My role</h4><p>I built the pages in Elementor from Adobe XD designs, added custom code where the builder fell short, updated page copy, handled on-page SEO, and communicated directly with the client. The client’s designers created the visual direction.</p></div>
+        <div class="case-part"><h4>Navigation decision</h4><p>I built the mega menu with custom code rather than adding a menu plugin or relying on Elementor Pro. That gave the 100+ page site tailored navigation without another plugin dependency.</p></div>
+        <div class="case-part"><h4>Build approach</h4><p>I kept Elementor as the day-to-day editing tool for the client’s team and reserved custom code for features the builder could not handle cleanly.</p></div>
+        <div class="case-part"><h4>SEO and migration</h4><p>I preserved the existing URL structure, meta titles, descriptions, and other SEO tags while rebuilding the site and migrating the blog content.</p></div>
+        <div class="case-part"><h4>Outcome</h4><p>The 100+ page redesign launched with the custom mega menu and the existing URL and metadata structure retained.</p></div>
+      </div>
+    </article>
+    <div class="case-grid">
+      <article class="case-card reveal">
+        <div class="case-thumbs" aria-label="Current INADEV website previews">
+          <a href="https://www.inadev.com/" target="_blank" rel="noopener"><img src="https://image.thum.io/get/width/1200/crop/700/https://www.inadev.com/" alt="Current INADEV homepage preview" loading="lazy" onerror="this.onerror=null;this.src='https://image.thum.io/get/width/1200/crop/700/https%3A%2F%2Fwww.inadev.com%2F';"><span>Homepage</span></a>
+          <a href="https://www.inadev.com/about/" target="_blank" rel="noopener"><img src="https://image.thum.io/get/width/1200/crop/700/https://www.inadev.com/about/" alt="Current INADEV About page preview" loading="lazy" onerror="this.onerror=null;this.src='https://image.thum.io/get/width/1200/crop/700/https%3A%2F%2Fwww.inadev.com%2Fabout%2F';"><span>About page</span></a>
+        </div>
+        <span class="case-kicker">WordPress · Elementor · Custom interactions</span>
+        <h3>INADEV: a distinctive interface for a broad technology portfolio</h3>
+        <div class="case-part"><h4>Challenge</h4><p>Present a wide range of technology services and solutions while making the company’s culture, credentials, and leadership easy to explore.</p></div>
+        <div class="case-part"><h4>My role &amp; approach</h4><p>I built most of the current website design in WordPress and Elementor. I added custom CSS and JavaScript where needed to match the intended interface and behavior.</p></div>
+        <div class="case-part"><h4>Interaction details</h4><p>I implemented value flip cards, a custom testimonial interface, and profile popups for the About page leadership cards. I focused on matching the UI closely, including spacing and interaction behavior.</p></div>
+        <div class="case-part"><h4>Outcome</h4><p>Most of the current design is live, built primarily in Elementor and extended with custom code for the parts that needed it.</p></div>
+        <a class="proj-link" href="https://www.inadev.com/" target="_blank" rel="noopener">Visit INADEV &rarr;</a>
+      </article>
+      <article class="case-card reveal">
+        <span class="case-kicker">WordPress plugin · Internal linking</span>
+        <h3>Lynkora</h3>
+        <div class="case-part"><h4>Challenge</h4><p>Site owners can miss orphaned pages, broken links, dead ends, and content that is difficult for visitors to reach.</p></div>
+        <div class="case-part"><h4>My role &amp; approach</h4><p>I built Lynkora to map links across posts, pages, menus, widgets, and block templates, then explain issues and suggest practical fixes.</p></div>
+        <div class="case-part"><h4>Key decisions</h4><p>Changes happen only when an editor chooses a fix, and WordPress revisions preserve a way to undo content edits. The plugin also tracks old page addresses and redirects them when appropriate.</p></div>
+        <div class="case-part"><h4>Outcome</h4><p>A published WordPress.org plugin with link health reports, guided fixes, scan history, CSV exports, and optional WP-CLI reports.</p></div>
+        <a class="proj-link" href="https://wordpress.org/plugins/lynkora/" target="_blank" rel="noopener">View Lynkora on WordPress.org &rarr;</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="plugins">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>WordPress plugins</h2>
+      <p>Independent plugins I built to make WordPress handoffs clearer and site structures easier to maintain.</p>
+    </div>
+    <div class="project-grid">
+      <div class="project-card reveal">
+        <div class="proj-top">
+          <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+          <span class="url-pill">wordpress.org/plugins/handoverly</span>
+        </div>
+        <a class="proj-image-link" href="https://wordpress.org/plugins/handoverly/" target="_blank" rel="noopener" aria-label="View Handoverly on WordPress.org">
+          <div class="plugin-art handoverly"><span>handoverly</span></div>
+        </a>
+        <div class="proj-body">
+          <h3>Handoverly</h3>
+          <p>I built a WordPress plugin that turns a site’s real content, menus, and custom fields into a branded client handbook.</p>
+          <div class="plugin-preview" aria-label="Illustrative preview of a branded client handbook">
+            <div class="preview-paper"><span class="preview-label">CLIENT HANDBOOK</span><b>Getting started</b><i></i><i></i><i class="short"></i><div class="preview-step"><span>01</span><div><b>Edit a page</b><i></i></div></div></div>
+            <span class="preview-caption">Illustrative workflow preview</span>
+          </div>
+          <h4 class="built-heading">What I built</h4>
+          <ul class="built-list"><li>Branded PDF guides based on site content, menus, ACF, and WooCommerce.</li><li>Illustrated step-by-step instructions for common client editing tasks.</li><li>One-time, expiring credential links with encrypted password storage.</li><li>Local PDF generation with no external service or API key.</li></ul>
+          <div class="tag-row">
+            <span class="tag">WordPress plugin</span><span class="tag">PHP</span><span class="tag">PDF generation</span><span class="tag">Client handoff</span>
+          </div>
+          <a class="proj-link" href="https://wordpress.org/plugins/handoverly/" target="_blank" rel="noopener">View plugin &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="proj-top">
+          <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+          <span class="url-pill">wordpress.org/plugins/lynkora</span>
+        </div>
+        <a class="proj-image-link" href="https://wordpress.org/plugins/lynkora/" target="_blank" rel="noopener" aria-label="View Lynkora on WordPress.org">
+          <div class="plugin-art lynkora"><span>lynkora</span></div>
+        </a>
+        <div class="proj-body">
+          <h3>Lynkora</h3>
+          <p>I built a WordPress site-structure tool that finds orphaned pages, dead ends, hard-to-reach content, and broken links, then helps site owners fix them.</p>
+          <div class="plugin-preview" aria-label="Illustrative preview of an internal link health report">
+            <div class="preview-dashboard"><div class="preview-dash-head"><b>Link health</b><span>Scan complete</span></div><div class="preview-metrics"><div><b>04</b><small>Orphans</small></div><div><b>02</b><small>Broken</small></div><div><b>03</b><small>Deep pages</small></div></div><div class="preview-row"><span class="preview-dot"></span><b>About our services</b><small>Suggest a link</small></div><div class="preview-row"><span class="preview-dot warning"></span><b>Contact the team</b><small>Old address</small></div></div>
+            <span class="preview-caption">Illustrative report preview</span>
+          </div>
+          <h4 class="built-heading">What I built</h4>
+          <ul class="built-list"><li>Link indexing across content, menus, widgets, and block templates.</li><li>Reports for orphans, dead ends, broken links, and hard-to-reach pages.</li><li>Link suggestions and guided fixes saved with WordPress revision history.</li><li>Old-address redirects, scan history, CSV reports, and optional WP-CLI tools.</li></ul>
+          <div class="tag-row">
+            <span class="tag">WordPress plugin</span><span class="tag">PHP</span><span class="tag">Internal linking</span><span class="tag">SEO</span>
+          </div>
+          <a class="proj-link" href="https://wordpress.org/plugins/lynkora/" target="_blank" rel="noopener">View plugin &rarr;</a>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
 <section id="skills" style="background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1167,47 +1476,24 @@
 
     <div class="skill-clusters">
       <div class="cluster reveal">
-        <h3>Frontend architecture</h3>
-        <div class="pill-cloud">
-          <span class="pill">React.js</span><span class="pill">TypeScript</span><span class="pill">JavaScript ES6+</span>
-          <span class="pill">HTML5</span><span class="pill">CSS3 / SASS</span><span class="pill">Accessibility (WCAG 2.1)</span>
-        </div>
+        <div class="cluster-heading"><span class="cluster-icon"><svg class="icon"><use href="#icon-code"></use></svg></span><h3>Frontend &amp; UI engineering</h3></div>
+        <div class="pill-cloud"><span class="pill">React</span><span class="pill">TypeScript</span><span class="pill">JavaScript ES6+</span><span class="pill">HTML5</span><span class="pill">CSS / SASS</span><span class="pill">WCAG 2.1</span><span class="pill">Vite / Webpack</span></div>
+        <p class="cluster-example"><strong>In practice:</strong> reusable components, responsive layouts, accessible states, and production-ready asset builds.</p>
       </div>
       <div class="cluster reveal">
-        <h3>Build tools</h3>
-        <div class="pill-cloud">
-          <span class="pill">Webpack</span><span class="pill">Vite</span><span class="pill">Parcel</span>
-          <span class="pill">Code splitting</span><span class="pill">Asset optimization</span>
-        </div>
+        <div class="cluster-heading"><span class="cluster-icon"><svg class="icon"><use href="#icon-layout"></use></svg></span><h3>CMS, commerce &amp; platforms</h3></div>
+        <div class="pill-cloud"><span class="pill">WordPress</span><span class="pill">Elementor</span><span class="pill">WooCommerce</span><span class="pill">Shopify</span><span class="pill">Go High Level</span><span class="pill">Wix</span><span class="pill">Squarespace</span><span class="pill">Zoho</span></div>
+        <p class="cluster-example"><strong>In practice:</strong> custom page builds and integrations that clients can manage after launch.</p>
       </div>
       <div class="cluster reveal">
-        <h3>SEO &amp; performance</h3>
-        <div class="pill-cloud">
-          <span class="pill">Core Web Vitals</span><span class="pill">Lighthouse</span><span class="pill">Semrush</span>
-          <span class="pill">Screaming Frog</span><span class="pill">Search Console</span><span class="pill">GTmetrix</span>
-        </div>
+        <div class="cluster-heading"><span class="cluster-icon"><svg class="icon"><use href="#icon-speed"></use></svg></span><h3>Performance &amp; technical SEO</h3></div>
+        <div class="pill-cloud"><span class="pill">Core Web Vitals</span><span class="pill">Lighthouse</span><span class="pill">Semrush</span><span class="pill">Screaming Frog</span><span class="pill">Search Console</span><span class="pill">GTmetrix</span></div>
+        <p class="cluster-example"><strong>In practice:</strong> page speed improvements, metadata, crawlability, and search-friendly site structure.</p>
       </div>
       <div class="cluster reveal">
-        <h3>CMS &amp; platforms</h3>
-        <div class="pill-cloud">
-          <span class="pill">WordPress</span><span class="pill">Elementor</span><span class="pill">WooCommerce</span>
-          <span class="pill">Shopify</span><span class="pill">Go High Level</span><span class="pill">Wix</span>
-          <span class="pill">Squarespace</span><span class="pill">Zoho</span>
-        </div>
-      </div>
-      <div class="cluster reveal">
-        <h3>Backend &amp; APIs</h3>
-        <div class="pill-cloud">
-          <span class="pill">Node.js</span><span class="pill">PHP</span><span class="pill">Laravel</span>
-          <span class="pill">Python</span><span class="pill">REST APIs</span><span class="pill">OAuth / JWT</span>
-        </div>
-      </div>
-      <div class="cluster reveal">
-        <h3>AI-assisted development</h3>
-        <div class="pill-cloud">
-          <span class="pill">Claude</span><span class="pill">Claude Code</span><span class="pill">Claude Cowork</span>
-          <span class="pill">Cursor</span><span class="pill">Codex</span><span class="pill">ChatGPT</span>
-        </div>
+        <div class="cluster-heading"><span class="cluster-icon"><svg class="icon"><use href="#icon-api"></use></svg></span><h3>Backend, APIs &amp; workflow</h3></div>
+        <div class="pill-cloud"><span class="pill">Node.js</span><span class="pill">PHP</span><span class="pill">Laravel</span><span class="pill">Python</span><span class="pill">REST APIs</span><span class="pill">OAuth / JWT</span><span class="pill">Cursor</span><span class="pill">Claude</span><span class="pill">Codex</span></div>
+        <p class="cluster-example"><strong>In practice:</strong> connect platforms securely, extend WordPress with custom code, and use AI tools to accelerate implementation and review.</p>
       </div>
     </div>
   </div>
@@ -1263,10 +1549,10 @@
     <h2>Got a site that needs building?</h2>
     <p>I'm open to frontend and WordPress projects, freelance work, and full-time roles. Drop me a line - I usually reply within a day.</p>
     <div class="contact-links">
-      <a class="primary" id="magneticBtn" href="mailto:anu771063@gmail.com">Email me</a>
-      <a class="secondary" href="https://linkedin.com/in/anuverma9983481b3" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="secondary" href="https://github.com/anu771063" target="_blank" rel="noopener">GitHub</a>
-      <a class="secondary" href="https://drive.google.com/file/d/1rcGJfdtvEK2FAgbNdmeh9ixYj6SZAcQ6/view?usp=sharing" target="_blank" rel="noopener">View résumé</a>
+      <a class="primary" id="magneticBtn" href="mailto:anu771063@gmail.com"><svg class="icon"><use href="#icon-mail"></use></svg>Email me</a>
+      <a class="secondary" href="https://linkedin.com/in/anuverma9983481b3" target="_blank" rel="noopener"><svg class="icon"><use href="#icon-link"></use></svg>LinkedIn</a>
+      <a class="secondary" href="https://github.com/anu771063" target="_blank" rel="noopener"><svg class="icon"><use href="#icon-code"></use></svg>GitHub</a>
+      <a class="secondary" href="Anu-Web-Developer.pdf" target="_blank" rel="noopener" download><svg class="icon"><use href="#icon-download"></use></svg>Download résumé</a>
     </div>
   </div>
 </section>
@@ -1288,10 +1574,44 @@
     navCta.classList.toggle('open');
     menuBtn.setAttribute('aria-expanded', isOpen);
   });
+
+  // Filter website projects by category.
+  const projectFilterButtons = document.querySelectorAll('.filter-btn');
+  const websiteProjectCards = document.querySelectorAll('#projects .project-card[data-category]');
+  projectFilterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      projectFilterButtons.forEach(item => item.setAttribute('aria-pressed', item === button ? 'true' : 'false'));
+      websiteProjectCards.forEach(card => {
+        const visible = filter === 'all' || card.dataset.category.split(' ').includes(filter);
+        card.hidden = !visible;
+        if (visible) {
+          card.classList.add('in-view', 'filter-enter');
+          window.setTimeout(() => card.classList.remove('filter-enter'), 350);
+        }
+      });
+    });
+  });
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     navLinks.classList.remove('open');
     navCta.classList.remove('open');
   }));
+
+  // Keep the current section visible in the navigation.
+  const sectionLinks = [...navLinks.querySelectorAll('a[href^="#"]')];
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      sectionLinks.forEach(link => {
+        if (link.hash === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    });
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
+  sectionLinks.forEach(link => {
+    const section = document.querySelector(link.hash);
+    if (section) sectionObserver.observe(section);
+  });
 
   // Scroll progress bar
   const scrollProgress = document.getElementById('scrollProgress');
@@ -1326,12 +1646,27 @@
   const typedEl = document.getElementById('typedUrl');
   const sitePreview = document.getElementById('sitePreview');
   const skeletonLoader = document.getElementById('skeletonLoader');
+  function resetPreview() {
+    sitePreview.classList.remove('is-active');
+    skeletonLoader.classList.remove('is-hidden');
+  }
+  function showPreview(src) {
+    resetPreview();
+    sitePreview.onload = () => {
+      sitePreview.classList.add('is-active');
+      skeletonLoader.classList.add('is-hidden');
+    };
+    sitePreview.onerror = resetPreview;
+    sitePreview.src = src;
+    if (sitePreview.complete && sitePreview.naturalWidth) {
+      sitePreview.classList.add('is-active');
+      skeletonLoader.classList.add('is-hidden');
+    }
+  }
   
   if (reduceMotion) {
     typedEl.textContent = urls[0];
-    sitePreview.src = urlScreenshots[urls[0]];
-    sitePreview.style.display = 'block';
-    skeletonLoader.style.display = 'none';
+    showPreview(urlScreenshots[urls[0]]);
   } else {
     let urlIndex = 0, charIndex = 0, deleting = false;
     function tick() {
@@ -1342,9 +1677,7 @@
         if (charIndex === current.length) { 
           deleting = true;
           // Show screenshot when URL is fully typed
-          sitePreview.src = urlScreenshots[current];
-          sitePreview.style.display = 'block';
-          skeletonLoader.style.display = 'none';
+          showPreview(urlScreenshots[current]);
           setTimeout(tick, 2000); 
           return; 
         }
@@ -1355,8 +1688,7 @@
           deleting = false; 
           urlIndex = (urlIndex + 1) % urls.length;
           // Hide screenshot when starting to delete
-          skeletonLoader.style.display = 'block';
-          sitePreview.style.display = 'none';
+          resetPreview();
         }
       }
       setTimeout(tick, deleting ? 35 : 65);
@@ -1368,7 +1700,7 @@
   const techs = ['React', 'TypeScript', 'WordPress', 'Elementor', 'Node.js', 'Shopify', 'WooCommerce', 'Go High Level', 'SASS', 'REST APIs', 'Vite', 'Laravel'];
   const track = document.getElementById('marqueeTrack');
   const setHtml = techs.map(t => `<span class="m-pill">${t}</span>`).join('');
-  track.innerHTML = setHtml + setHtml;
+  track.innerHTML = setHtml + (reduceMotion ? '' : setHtml);
 
   // Hero cursor glow (desktop only)
   const glow = document.getElementById('cursorGlow');
@@ -1381,6 +1713,30 @@
       glow.style.opacity = '1';
     });
     heroEl.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+  }
+
+  // A light, multicolor cursor halo for mouse and trackpad users.
+  const cursorOrbit = document.getElementById('cursorOrbit');
+  if (pointerFine && !reduceMotion && cursorOrbit) {
+    let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2;
+    let orbitX = targetX, orbitY = targetY, orbitFrame = false;
+    function easeCursor() {
+      orbitX += (targetX - orbitX) * 0.22;
+      orbitY += (targetY - orbitY) * 0.22;
+      cursorOrbit.style.transform = `translate3d(${orbitX}px, ${orbitY}px, 0) translate(-50%, -50%)`;
+      if (Math.abs(targetX - orbitX) > 0.35 || Math.abs(targetY - orbitY) > 0.35) requestAnimationFrame(easeCursor);
+      else orbitFrame = false;
+    }
+    document.addEventListener('pointermove', event => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      cursorOrbit.classList.add('is-visible');
+      const interactive = event.target instanceof Element && event.target.closest('a, button, input, textarea, select, [role="button"]');
+      cursorOrbit.classList.toggle('is-hover', Boolean(interactive));
+      if (!orbitFrame) { orbitFrame = true; requestAnimationFrame(easeCursor); }
+    }, { passive: true });
+    document.documentElement.addEventListener('pointerleave', () => cursorOrbit.classList.remove('is-visible'));
+    document.documentElement.addEventListener('pointerenter', () => cursorOrbit.classList.add('is-visible'));
   }
 
   // Animated stat counters
@@ -1428,21 +1784,6 @@
     revealEls.forEach(el => revealObserver.observe(el));
   }
 
-  // Project card 3D tilt (desktop only)
-  if (pointerFine && !reduceMotion) {
-    document.querySelectorAll('.project-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const r = card.getBoundingClientRect();
-        const x = e.clientX - r.left, y = e.clientY - r.top;
-        const cx = r.width / 2, cy = r.height / 2;
-        const rotateX = ((y - cy) / cy) * -6;
-        const rotateY = ((x - cx) / cx) * 6;
-        card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      });
-      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-    });
-  }
-
   // Timeline scroll-fill
   const timelineEl = document.getElementById('timeline');
   const timelineFill = document.getElementById('timelineFill');
@@ -1461,17 +1802,6 @@
   window.addEventListener('resize', updateTimelineFill);
   updateTimelineFill();
 
-  // Magnetic contact button (desktop only)
-  const magBtn = document.getElementById('magneticBtn');
-  if (pointerFine && !reduceMotion) {
-    magBtn.addEventListener('mousemove', (e) => {
-      const r = magBtn.getBoundingClientRect();
-      const x = e.clientX - r.left - r.width / 2;
-      const y = e.clientY - r.top - r.height / 2;
-      magBtn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
-    });
-    magBtn.addEventListener('mouseleave', () => { magBtn.style.transform = ''; });
-  }
 </script>
 
 </body>
