@@ -1609,6 +1609,58 @@
     .about-facts .fact { position:relative; top:auto; margin-bottom:16px; min-height:0; }
     .case-feature { position:relative; top:auto; }
   }
+
+  /* ---------- MOBILE SLIDERS (max 767px) ---------- */
+  .slider-ctrl { display:none; }
+  @media (max-width:767px) {
+    [data-slider] { display:flex !important; flex-wrap:nowrap; gap:14px !important; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; margin:0 -28px; padding:6px 28px 14px; scroll-padding-inline:28px; scrollbar-width:none; }
+    [data-slider]::-webkit-scrollbar { display:none; }
+    #projects .project-grid[data-slider], #plugins .project-grid[data-slider] { grid-template-columns:none; }
+    .case-grid { display:contents !important; }
+    [data-slider] > .project-card, [data-slider] > .case-feature, [data-slider] > .case-card, .case-slider > .case-grid > .case-card { flex:0 0 86%; width:86%; min-width:0; scroll-snap-align:start; margin:0 !important; position:relative !important; top:auto !important; translate:none !important; scale:none !important; rotate:none !important; opacity:1 !important; transform:none !important; }
+    [data-slider] > .project-card[hidden] { display:none !important; }
+    .case-feature { display:block; padding:18px; }
+    .case-feature .case-gallery { min-height:0; grid-template-rows:110px 110px; margin-bottom:16px; }
+    .case-feature .case-detail-grid { grid-template-columns:1fr; }
+    #plugins .project-card { display:block; }
+    #plugins .plugin-cover .plugin-preview { min-height:210px; }
+    .slider-ctrl { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:6px; }
+    .slider-dots { display:flex; gap:7px; align-items:center; flex-wrap:wrap; }
+    .slider-dots button { width:8px; height:8px; padding:0; border:0; border-radius:8px; background:rgba(143,184,255,.35); cursor:pointer; transition:width .3s ease,background .3s ease; }
+    .slider-dots button.on { width:26px; background:var(--lime); box-shadow:0 0 10px rgba(212,255,36,.5); }
+    .slider-count { font:500 .72rem 'JetBrains Mono',monospace; letter-spacing:.1em; color:var(--ink-faint); }
+    .slider-count b { color:var(--lime); font-weight:500; }
+    .slider-arrows { display:flex; gap:8px; }
+    .slider-arrows button { width:40px; height:40px; border-radius:50%; border:1px solid rgba(91,146,238,.4); background:rgba(21,88,201,.12); color:#fff; display:grid; place-items:center; cursor:pointer; transition:background .25s ease,color .25s ease,border-color .25s ease; }
+    .slider-arrows button:active, .slider-arrows button:hover { background:var(--lime); color:var(--black); border-color:var(--lime); }
+    .slider-arrows .icon { width:18px; height:18px; stroke-width:2.2; }
+    .slider-arrows .prev .icon { transform:rotate(180deg); }
+    .slider-arrows button:disabled { opacity:.35; pointer-events:none; }
+  }
+
+  /* ---------- MAX 420px ---------- */
+  @media (max-width:420px) {
+    .btn {
+      gap: 8px;
+      padding: 12px 14px;
+      font-size: 0.90rem;
+    }
+    .about-facts .fact h4 {
+      font-size: 1.18rem;
+    }
+    .contact-links a {
+      padding: 12px 14px;
+      font-size: 0.80rem;
+    }
+  }
+
+  @media (max-width:767px) {
+    .proj-top { overflow:hidden; }
+    .proj-top .url-pill { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    #plugins .plugin-intro h3 { font-size:1.55rem; }
+    #plugins .proj-body { padding:22px 20px; }
+    .case-feature .case-detail-grid { margin-top:18px; }
+  }
 </style>
 </head>
 <body>
@@ -1804,7 +1856,7 @@
       <button class="filter-btn" type="button" data-filter="marketing" aria-pressed="false">Marketing</button>
     </div>
 
-    <div class="project-grid">
+    <div class="project-grid" data-slider="projects" data-item=".project-card">
 
       <div class="project-card reveal" data-category="wordpress">
         <div class="proj-top">
@@ -1967,6 +2019,7 @@
       <h2>Selected case studies</h2>
       <p>A closer look at the goals, implementation, and delivered outcomes behind a few projects.</p>
     </div>
+    <div class="case-slider" data-slider="case" data-item=".case-feature, .case-card">
     <article class="case-feature reveal">
       <div class="case-gallery" aria-label="Naylor website screenshots. Select an image to open it full size.">
         <a class="case-shot" href="naylor-homepage.png" target="_blank" rel="noopener"><img src="naylor-homepage.png" alt="Naylor homepage redesign" loading="lazy"><span>Homepage</span></a>
@@ -2014,6 +2067,7 @@
         <a class="proj-link" href="https://wordpress.org/plugins/lynkora/" target="_blank" rel="noopener">View Lynkora on WordPress.org &rarr;</a>
       </article>
     </div>
+    </div>
   </div>
 </section>
 
@@ -2023,7 +2077,7 @@
       <h2>WordPress plugins</h2>
       <p>WordPress plugins I built for clearer client handoffs, healthier site structure, and safer media library maintenance, and faster debugging.</p>
     </div>
-    <div class="project-grid">
+    <div class="project-grid" data-slider="plugins" data-item=".project-card">
       <div class="project-card reveal">
         <div class="proj-top">
           <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
@@ -2807,7 +2861,8 @@
 
       // projects: rise, scale, column parallax, image parallax
       const pc = projCards();
-      pc.forEach((c, i) => {
+      const mobileSlider = window.innerWidth <= 767;
+      if (!mobileSlider) pc.forEach((c, i) => {
         const r = c.getBoundingClientRect();
         if (r.bottom < -200 || r.top > H + 200) return;
         const col = i % 3, wide = window.innerWidth > 960;
@@ -2840,6 +2895,56 @@
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
+  })();
+
+
+  // ---- Mobile sliders: dots, arrows and counter for tracks marked data-slider (max 767px) ----
+  (function () {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const sliders = [];
+    document.querySelectorAll('[data-slider]').forEach(track => {
+      const items = () => [...track.querySelectorAll(track.dataset.item)].filter(el => !el.hidden && el.offsetParent !== null);
+      const ctrl = document.createElement('div');
+      ctrl.className = 'slider-ctrl';
+      ctrl.innerHTML = '<div class="slider-dots"></div><span class="slider-count"></span><div class="slider-arrows"><button type="button" class="prev" aria-label="Previous"><svg class="icon"><use href="#icon-arrow"></use></svg></button><button type="button" class="next" aria-label="Next"><svg class="icon"><use href="#icon-arrow"></use></svg></button></div>';
+      track.insertAdjacentElement('afterend', ctrl);
+      const dots = ctrl.querySelector('.slider-dots'), count = ctrl.querySelector('.slider-count');
+      const prev = ctrl.querySelector('.prev'), next = ctrl.querySelector('.next');
+      let active = 0;
+      function go(i) {
+        const list = items(); if (!list.length) return;
+        i = Math.max(0, Math.min(list.length - 1, i));
+        track.scrollTo({ left: list[i].offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft || 0) + 0, behavior: 'smooth' });
+      }
+      function update() {
+        const list = items(); if (!list.length) return;
+        const base = parseFloat(getComputedStyle(track).paddingLeft || 0);
+        let best = 0, bestD = Infinity;
+        list.forEach((el, i) => { const d = Math.abs(el.offsetLeft - track.offsetLeft - base - track.scrollLeft); if (d < bestD) { bestD = d; best = i; } });
+        if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) best = list.length - 1;
+        active = best;
+        dots.querySelectorAll('button').forEach((b, i) => b.classList.toggle('on', i === active));
+        count.innerHTML = '<b>' + String(active + 1).padStart(2, '0') + '</b> / ' + String(list.length).padStart(2, '0');
+        prev.disabled = active === 0; next.disabled = active === list.length - 1;
+      }
+      function build() {
+        const list = items();
+        dots.innerHTML = '';
+        list.forEach((_, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Go to slide ' + (i + 1)); b.addEventListener('click', () => go(i)); dots.appendChild(b); });
+        update();
+      }
+      prev.addEventListener('click', () => go(active - 1));
+      next.addEventListener('click', () => go(active + 1));
+      let raf = false;
+      track.addEventListener('scroll', () => { if (!raf) { raf = true; requestAnimationFrame(() => { raf = false; update(); }); } }, { passive: true });
+      window.addEventListener('resize', build);
+      sliders.push({ track, build, go });
+      build();
+    });
+    // project filters change the slide list: rebuild and return to the first card
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+      setTimeout(() => sliders.forEach(s => { if (s.track.closest('#projects')) { s.track.scrollLeft = 0; s.build(); } }), 60);
+    }));
   })();
 
 </script>
